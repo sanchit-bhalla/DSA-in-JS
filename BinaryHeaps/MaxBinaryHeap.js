@@ -1,3 +1,9 @@
+/*
+  Time Complexity of Binary Heaps
+    Insertion - O(log2 N)
+    Removal   - O(log2 N)
+    Search    - O(N),  Binary heaps are not optimized for searching.
+*/
 class MaxBinaryHeap {
   constructor() {
     this.values = [];
