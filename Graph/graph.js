@@ -31,6 +31,7 @@ class Graph {
   }
 
   // DFS Recursively
+  // T.C --> O(V + 2*E)
   depthFirstRecursive(start) {
     const result = [];
     const visited = {};
@@ -46,6 +47,65 @@ class Graph {
         if (!visited[neighbour]) dfs(neighbour);
       });
     })(start);
+
+    return result;
+  }
+
+  // T.C --> O(V + 2*E)
+  depthFirstIterative(start) {
+    const stack = [];
+    const result = [];
+    const visited = {};
+    let curentVertex;
+
+    stack.push(start);
+    visited[start] = true;
+
+    while (stack.length) {
+      curentVertex = stack.pop();
+      result.push(curentVertex);
+
+      // Way 1
+      // for (const adjacentVertex of this.adjacencyList[curentVertex]) {
+      //   if (!visited[adjacentVertex]) {
+      //     stack.push(adjacentVertex);
+      //     visited[adjacentVertex] = true;
+      //   }
+      // }
+
+      // Way 2
+      this.adjacencyList[curentVertex].forEach((adjacentVertex) => {
+        if (!visited[adjacentVertex]) {
+          stack.push(adjacentVertex);
+          visited[adjacentVertex] = true;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  // T.C --> O(V + 2*E)
+  bfs(start) {
+    const queue = [];
+    const result = [];
+    const visited = {};
+    let currentVertex;
+
+    queue.push(start);
+    visited[start] = true;
+    while (queue.length) {
+      currentVertex = queue.shift();
+      result.push(currentVertex);
+
+      this.adjacencyList[currentVertex].forEach((neighbour) => {
+        // this.adjacencyList[currentVertex].slice().reverse() --> for different order of bfs
+        if (!visited[neighbour]) {
+          queue.push(neighbour);
+          visited[neighbour] = true;
+        }
+      });
+    }
 
     return result;
   }
@@ -81,3 +141,5 @@ g.addEdge("D", "E");
 g.addEdge("D", "F");
 g.addEdge("E", "F");
 g.depthFirstRecursive("A");
+g.depthFirstIterative("A");
+g.bfs("A");
